@@ -1,73 +1,84 @@
-# React + TypeScript + Vite
+# 🎬 Movie SPA - Prueba Técnica Front-End
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Single-Page Application (SPA) desarrollada para la evaluación técnica de Front-End. La aplicación se conecta a la **OMDb API** para buscar películas, ver detalles en un modal accesible y gestionar una lista de favoritos persistente con múltiples criterios de ordenamiento.
 
-Currently, two official plugins are available:
+## 🏗️ Arquitectura y Dependencias Principales
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+El proyecto fue inicializado con **Vite** para ofrecer un entorno de desarrollo rápido y un empaquetado optimizado. 
 
-## React Compiler
+**Dependencias Principales:**
+* **Core:** React 18, TypeScript.
+* **State Management:** Zustand (ligero, libre de boilerplate y con middleware nativo para `localStorage`).
+* **Estilos:** CSS Modules (CSS puro sin colisiones, estructurado bajo metodología BEM y Mobile-first).
+* **Peticiones HTTP:** Axios (manejo simplificado de promesas y tipado).
+* **Calidad de Código:** ESLint, Prettier.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Arquitectura:**
+Se implementó **Diseño Atómico (Atomic Design)** organizando la UI en Átomos, Moléculas, Organismos y Templates. Esto se combinó con el principio de **Separación de Intereses (SoC)**, aislando la lógica de negocio y las integraciones de API en la capa de servicios (`src/services`) y el estado global (`src/store`), manteniendo los componentes de React orientados exclusivamente a la presentación.
 
-## Expanding the ESLint configuration
+## 🧠 Decisiones Técnicas
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Las decisiones técnicas se tomaron bajo el enfoque de construir aplicaciones empresariales intensivas en datos, priorizando el rendimiento, la escalabilidad y la experiencia de usuario:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1. **Gestión de Estado Centralizada:** Se eligió Zustand sobre Context API para evitar re-renderizados en cascada en toda la aplicación cada vez que se actualiza la lista de favoritos o los parámetros de búsqueda.
+2. **Optimización de Renderizado (Rendimiento):** Se implementó el hook `useMemo` en la lógica de ordenamiento del panel de favoritos. Esto asegura que el cálculo de ordenamiento masivo (A-Z, fecha o género) solo se ejecute cuando las dependencias cambien, protegiendo el *main thread*.
+3. **Manejo de Limitaciones de la API:** Dado que la OMDb API no devuelve el género ni la sinopsis completa en la búsqueda general (`s=`), se diseñó un servicio que intercepta los resultados y ejecuta un `Promise.all` para hidratar las tarjetas con los datos completos por ID (`i=`), asegurando una vista rica en información.
+4. **Accesibilidad (a11y):** El modal de detalles se construyó garantizando un alto nivel de accesibilidad. Implementa un "Focus Trap" nativo, navegación fluida 100% por teclado, atajo de cierre con la tecla `Escape` y atributos semánticos ARIA (`role="dialog"`, `aria-modal`), cumpliendo con los estándares de contraste WCAG AA.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## ⚙️ Setup y Scripts de Desarrollo/Build
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Sigue estas instrucciones para levantar el proyecto en tu entorno local:
+
+1. **Clonar el repositorio:**
+   ```bash
+   git clone <URL_DE_TU_REPOSITORIO>
+   cd movie-spa
+   ```
+Instalar las dependencias:
+
+ ```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- Configurar variables de entorno:
+- Crea un archivo .env en la raíz del proyecto y agrega tu API Key de OMDb:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+ ```bash
+VITE_OMDB_API_KEY=tu_api_key_aqui
 ```
+Scripts disponibles:
+
+Desarrollo: Levanta el servidor local con Hot Module Replacement (HMR).
+
+ ```bash
+npm run dev
+```
+
+Construcción (Build): Compila el proyecto con TypeScript y genera los estáticos optimizados para producción en la carpeta dist.
+
+ ```bash
+npm run build
+```
+
+Previsualización de Producción: Sirve la carpeta dist localmente para probar el build final antes del despliegue.
+
+ ```bash
+npm run preview
+```
+
+📂 Instrucciones para correr la Actividad #2
+La solución a la segunda actividad (desestructuración, inmutabilidad y copia profunda de objetos para evitar mutaciones de referencia en el JSON proporcionado) se encuentra aislada en un script independiente.
+
+Para ejecutar el código y evaluar la demostración en consola, corre el siguiente comando estando en la raíz del proyecto:
+
+ ```bash
+node jsonActivity2.js
+```
+
+🌐 Despliegue en Vivo
+El entorno de producción ha sido desplegado y puede evaluarse en el siguiente enlace:
+[Insertar aquí tu link público de Vercel/Netlify]
+
+### Autor: Germán Mora Pérez
+
+### Computer Engineer & Frontend Developer
