@@ -132,7 +132,6 @@ He añadido y documentado varias mejoras en la aplicación. A continuación un r
 	- Verifica navegación de paginación con varios resultados (usa términos populares como "batman").
 	- Comprueba que agregar/quitar favoritos persiste tras recargar la página.
 
-Si detectas algo que falte o quieres que añada instrucciones CI/CD específicas, dímelo y lo incluyo.
 
 ### Autor: Germán Mora Pérez
 
