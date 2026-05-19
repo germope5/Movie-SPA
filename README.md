@@ -29,6 +29,12 @@ Las decisiones técnicas se tomaron bajo el enfoque de construir aplicaciones em
 
 Sigue estas instrucciones para levantar el proyecto en tu entorno local:
 
+### Inicialización del Proyecto (Referencia)
+Este proyecto fue creado desde cero utilizando Vite con el template de React y TypeScript mediante los siguientes comandos:
+```bash
+npm create vite@latest movie-spa -- --template react-ts
+```
+
 1. **Clonar el repositorio:**
    ```bash
    git clone <URL_DE_TU_REPOSITORIO>
@@ -66,7 +72,7 @@ Previsualización de Producción: Sirve la carpeta dist localmente para probar e
 npm run preview
 ```
 
-📂 Instrucciones para correr la Actividad #2
+## 📂 Instrucciones para correr la Actividad #2
 La solución a la segunda actividad (desestructuración, inmutabilidad y copia profunda de objetos para evitar mutaciones de referencia en el JSON proporcionado) se encuentra aislada en un script independiente.
 
 Para ejecutar el código y evaluar la demostración en consola, corre el siguiente comando estando en la raíz del proyecto:
@@ -75,7 +81,7 @@ Para ejecutar el código y evaluar la demostración en consola, corre el siguien
 node jsonActivity2.js
 ```
 
-🌐 Despliegue en Vivo
+## 🌐 Despliegue en Vivo
 El entorno de producción ha sido desplegado y puede evaluarse en el siguiente enlace:
 [Insertar aquí tu link público de Vercel/Netlify]
 
