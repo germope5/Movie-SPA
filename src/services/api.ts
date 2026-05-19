@@ -33,7 +33,7 @@ export const searchMovies = async (title: string, type?: string, year?: string):
 
     // Obtener el género y detalles con Promise.all 
     const detailedMoviesPromises = basicResults.map(async (movie: { imdbID: string }) => {
-      const detailResponse = await axios.get(`${BASE_URL}?apikey=${API_KEY}&i=${movie.imdbID}`);
+      const detailResponse = await axios.get(`${BASE_URL}?apikey=${API_KEY}&i=${movie.imdbID}&plot=full`);
       return detailResponse.data;
     });
 
