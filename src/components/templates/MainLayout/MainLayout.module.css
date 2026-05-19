@@ -1,0 +1,51 @@
+.layoutContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.mainContent {
+  flex: 1;
+  padding: var(--spacing-md);
+  width: 100%;
+}
+
+.headerWrapper {
+  margin-bottom: var(--spacing-lg);
+}
+
+.searchSection {
+  margin-bottom: var(--spacing-lg);
+}
+
+.resultsSection {
+  width: 100%;
+}
+
+.sidebar {
+  background-color: var(--color-bg-surface);
+  border-top: 1px solid var(--color-bg-input);
+  padding: var(--spacing-md);
+  width: 100%;
+}
+
+/* Diseño Responsivo Mobile-First a Desktop */
+@media (min-width: 768px) {
+  .layoutContainer {
+    flex-direction: row;
+  }
+
+  .mainContent {
+    padding: var(--spacing-lg);
+    width: 75%;
+  }
+
+  .sidebar {
+    width: 25%;
+    border-top: none;
+    border-left: 1px solid var(--color-bg-input);
+    min-height: 100vh;
+    position: sticky;
+    top: 0;
+  }
+}
