@@ -1,18 +1,23 @@
+import { useState } from 'react'; 
 import { useMovieStore } from './store/useMovieStore';
 import { MainLayout } from './components/templates/MainLayout/MainLayout';
 import { SearchForm } from './components/organisms/SearchForm/SearchForm';
 import { MovieCard } from './components/organisms/MovieCard/MovieCard';
+import { MovieDetailModal } from './components/organisms/MovieDetailModal/MovieDetailModal'; 
+import type { MovieDetail } from './services/api';
 
 function App() {
   const { movies, isLoading, error } = useMovieStore();
+  
+  // Estado para controlar qué película mostrar en el modal
+  const [selectedMovie, setSelectedMovie] = useState<MovieDetail | null>(null);
 
-  // 1. Componente del Encabezado (Slot para el Header)
   const headerContent = (
     <>
       <a href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-        <h1 style={{ fontSize: '2rem', fontWeight: 'bold', letterSpacing: '-0.05em' }}>
-          Movie <span style={{ color: 'var(--color-brand-primary)' }}>SPA</span>
-        </h1>
+      <h1 style={{ fontSize: '2rem', fontWeight: 'bold', letterSpacing: '-0.05em' }}>
+        Movie <span style={{ color: 'var(--color-brand-primary)' }}>SPA</span>
+      </h1>
       </a>
       <p style={{ color: 'var(--color-text-secondary)', marginTop: '0.25rem' }}>
         Buscador profesional de películas y series
@@ -20,7 +25,6 @@ function App() {
     </>
   );
 
-  // 2. Componente de Resultados (Slot para el listado)
   const resultsContent = (
     <div>
       {isLoading && (
@@ -30,12 +34,7 @@ function App() {
       )}
       
       {error && (
-        <div style={{ 
-          backgroundColor: 'var(--color-danger-bg)', 
-          color: 'white', 
-          padding: 'var(--spacing-md)', 
-          borderRadius: 'var(--radius-md)' 
-        }}>
+        <div style={{ backgroundColor: 'var(--color-danger-bg)', color: 'white', padding: 'var(--spacing-md)', borderRadius: 'var(--radius-md)' }}>
           <strong>Error:</strong> {error}
         </div>
       )}
@@ -47,19 +46,12 @@ function App() {
       )}
 
       {!isLoading && movies.length > 0 && (
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', 
-          gap: 'var(--spacing-lg)' 
-        }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 'var(--spacing-lg)' }}>
           {movies.map((movie) => (
             <MovieCard 
               key={movie.imdbID} 
               movie={movie} 
-              onMoreInfo={(selectedMovie) => {
-                console.log("Abrir modal para:", selectedMovie.Title);
-                // Aquí conectaremos el modal en el siguiente paso
-              }} 
+              onMoreInfo={(movie) => setSelectedMovie(movie)} 
             />
           ))}
         </div>
@@ -67,7 +59,6 @@ function App() {
     </div>
   );
 
-  // 3. Componente de Favoritos (Slot para el Sidebar)
   const favoritesContent = (
     <div>
       <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: 'var(--spacing-md)' }}>
@@ -80,12 +71,20 @@ function App() {
   );
 
   return (
-    <MainLayout
-      header={headerContent}
-      searchForm={<SearchForm />}
-      resultsList={resultsContent}
-      favoritesSidebar={favoritesContent}
-    />
+    <>
+      <MainLayout
+        header={headerContent}
+        searchForm={<SearchForm />}
+        resultsList={resultsContent}
+        favoritesSidebar={favoritesContent}
+      />
+
+      {/* 5. Renderizado condicional del modal accesible */}
+      <MovieDetailModal 
+        movie={selectedMovie} 
+        onClose={() => setSelectedMovie(null)} 
+      />
+    </>
   );
 }
 

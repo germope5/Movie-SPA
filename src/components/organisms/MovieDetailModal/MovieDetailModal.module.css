@@ -1,0 +1,132 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--spacing-md);
+}
+
+.modalBox {
+  background-color: var(--color-bg-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-bg-input);
+  padding: var(--spacing-lg);
+  max-width: 600px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.closeCornerButton {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary);
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+
+.closeCornerButton:hover {
+  color: var(--color-text-primary);
+}
+
+.metaHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.badge {
+  background-color: var(--color-bg-input);
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+}
+
+.metaText, .ratingText {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+.ratingText {
+  color: #f59e0b; /* Color dorado para la estrella de calificación */
+  font-weight: 600;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+  padding-right: 2rem; /* Espacio para que no choque con el botón X */
+}
+
+.year {
+  color: var(--color-brand-primary);
+  font-weight: 400;
+}
+
+.divider {
+  height: 1px;
+  background-color: var(--color-bg-input);
+  margin: var(--spacing-md) 0;
+}
+
+.infoGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.sectionTitle {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.plot {
+  font-size: 1rem;
+  color: var(--color-text-primary);
+  line-height: 1.6;
+}
+
+.creditsSection {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.creditsSection strong {
+  color: var(--color-text-primary);
+}
+
+.footer {
+  margin-top: var(--spacing-lg);
+  display: flex;
+  justify-content: flex-end;
+}
