@@ -34,6 +34,7 @@ export const SearchForm = () => {
   return (
     <form className={styles.formContainer} onSubmit={handleSubmit}>
       <div className={styles.grid}>
+        {/* Campo de título */}
         <div className={styles.fieldTitle}>
           <label className={styles.label}>Título de la película/serie</label>
           <Input 
@@ -44,7 +45,7 @@ export const SearchForm = () => {
             required 
           />
         </div>
-
+        {/* Campo de tipo (película, serie o ambos) */}
         <div className={styles.fieldSmall}>
           <label className={styles.label}>Tipo</label>
           <Input 
@@ -59,6 +60,7 @@ export const SearchForm = () => {
           />
         </div>
 
+        {/* Campo de género */}
         <div className={styles.fieldSmall}>
           <label className={styles.label}>Género</label>
           <Input 
@@ -68,7 +70,7 @@ export const SearchForm = () => {
             options={GENRES}
           />
         </div>
-
+        {/* Campo de año */}
         <div className={styles.fieldSmall}>
           <label className={styles.label}>Año</label>
           <Input 
@@ -79,7 +81,7 @@ export const SearchForm = () => {
           />
         </div>
       </div>
-
+      {/* Acciones */}
       <div className={styles.actions}>
         <Button type="submit" disabled={isLoading || !title.trim()}>
           {isLoading ? 'Buscando...' : 'Buscar'}

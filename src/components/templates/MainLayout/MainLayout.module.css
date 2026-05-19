@@ -1,3 +1,4 @@
+/* Diseño principal de la disposición */
 .layoutContainer {
   display: flex;
   flex-direction: column;

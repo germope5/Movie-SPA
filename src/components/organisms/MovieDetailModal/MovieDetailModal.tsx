@@ -1,16 +1,21 @@
+// Componente de modal para mostrar detalles completos de una película
 import { useEffect, useRef } from 'react';
 import type { MovieDetail } from '../../../services/api';
 import { Button } from '../../atoms/Button/Button';
 import styles from './MovieDetailModal.module.css';
 
+// Props del componente: recibe la película a mostrar y una función para cerrar el modal
 interface MovieDetailModalProps {
   movie: MovieDetail | null;
   onClose: () => void;
 }
 
+// Componente de modal que muestra detalles completos de una película,
+//  incluyendo sinopsis, director, elenco y género.
 export const MovieDetailModal = ({ movie, onClose }: MovieDetailModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
+  // Efecto para manejar el enfoque y la navegación por teclado dentro del modal
   useEffect(() => {
     if (!movie) return;
 
@@ -22,17 +27,17 @@ export const MovieDetailModal = ({ movie, onClose }: MovieDetailModalProps) => {
     const firstElement = focusableElements?.[0] as HTMLElement;
     const lastElement = focusableElements?.[focusableElements.length - 1] as HTMLElement;
 
-    // 1. Mover el foco al primer elemento interactivo (el botón de cerrar) al abrir
+    // Mover el foco al primer elemento interactivo (el botón de cerrar) al abrir
     firstElement?.focus();
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      // 2. Cerrar con Escape
+      // Cerrar con Escape
       if (e.key === 'Escape') {
         onClose();
         return;
       }
       
-      // 3. Atrapar el foco dentro del modal al usar Tab
+      // Atrapar el foco dentro del modal al usar Tab
       if (e.key === 'Tab') {
         if (e.shiftKey) { // Si presiona Shift + Tab (hacia atrás)
           if (document.activeElement === firstElement) {
@@ -51,6 +56,7 @@ export const MovieDetailModal = ({ movie, onClose }: MovieDetailModalProps) => {
     document.body.style.overflow = 'hidden';
     window.addEventListener('keydown', handleKeyDown);
 
+    // Limpieza del efecto: restaurar el scroll 
     return () => {
       document.body.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
@@ -59,6 +65,8 @@ export const MovieDetailModal = ({ movie, onClose }: MovieDetailModalProps) => {
 
   if (!movie) return null;
 
+  // Extraemos información adicional de la película, 
+  // manejando casos donde la API no devuelve datos
   const anyMovie = movie as any; 
   const director = anyMovie.Director && anyMovie.Director !== 'N/A' ? anyMovie.Director : 'No disponible';
   const actors = anyMovie.Actors && anyMovie.Actors !== 'N/A' ? anyMovie.Actors : 'No disponible';
@@ -90,6 +98,7 @@ export const MovieDetailModal = ({ movie, onClose }: MovieDetailModalProps) => {
           &times;
         </Button>
 
+      {/* Encabezado con metadatos */}
         <div className={styles.metaHeader}>
           <span className={styles.badge}>{movie.Type.toUpperCase()}</span>
           {duration && <span className={styles.metaText}>{duration}</span>}
@@ -110,6 +119,7 @@ export const MovieDetailModal = ({ movie, onClose }: MovieDetailModalProps) => {
             </p>
           </div>
 
+          {/* Sección de los datos de créditos */}
           <div className={styles.creditsSection}>
             <p><strong>Dirección:</strong> {director}</p>
             <p><strong>Elenco:</strong> {actors}</p>
@@ -117,6 +127,7 @@ export const MovieDetailModal = ({ movie, onClose }: MovieDetailModalProps) => {
           </div>
         </div>
 
+        {/* Pie de página con botón de cierre */}
         <div className={styles.footer}>
           <Button variant="danger" onClick={onClose} ariaLabel="Cerrar detalles de la película">
             Cerrar

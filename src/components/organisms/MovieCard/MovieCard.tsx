@@ -1,3 +1,5 @@
+// Componente de tarjeta de película que muestra información básica
+//  y permite marcar como favorito
 import { useState } from 'react';
 import { useMovieStore } from '../../../store/useMovieStore';
 import { Button } from '../../atoms/Button/Button';
@@ -21,7 +23,8 @@ export const MovieCard = ({ movie, onMoreInfo }: MovieCardProps) => {
   const [imgSrc, setImgSrc] = useState<string>(initialPoster);
 
 
-
+// Renderizamos la tarjeta con la información de la película y un botón para 
+// marcar como favorito
   return (
     <article className={styles.card}>
       <div className={styles.imageContainer}>
@@ -42,6 +45,7 @@ export const MovieCard = ({ movie, onMoreInfo }: MovieCardProps) => {
         </button>
       </div>
       
+      {/* Contenido de la tarjeta */}
       <div className={styles.content}>
         <div className={styles.header}>
           <h3 className={styles.title} title={movie.Title}>{movie.Title}</h3>
@@ -54,6 +58,7 @@ export const MovieCard = ({ movie, onMoreInfo }: MovieCardProps) => {
           {movie.Plot !== 'N/A' ? movie.Plot : 'Sinopsis no disponible.'}
         </p>
         
+        {/* Botón para más información */}
         <div className={styles.footer}>
           <Button onClick={() => onMoreInfo(movie)}>
             Más info

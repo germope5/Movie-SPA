@@ -1,6 +1,8 @@
+// MainLayout.tsx - Componente de plantilla para la disposición principal de la aplicación
 import React from 'react';
 import styles from './MainLayout.module.css';
 
+// Interfaz de props para el MainLayout, que define las secciones principales
 interface MainLayoutProps {
   header: React.ReactNode;
   searchForm: React.ReactNode;
@@ -8,6 +10,7 @@ interface MainLayoutProps {
   favoritesSidebar: React.ReactNode;
 }
 
+// Componente de plantilla que organiza la disposición principal de la aplicación
 export const MainLayout = ({
   header,
   searchForm,

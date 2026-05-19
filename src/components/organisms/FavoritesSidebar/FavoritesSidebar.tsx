@@ -1,9 +1,11 @@
+// Componente de barra lateral para mostrar la lista de películas favoritas del usuario.
 import { useState, useMemo } from 'react';
 import { useMovieStore } from '../../../store/useMovieStore';
 import { Input } from '../../atoms/Input/Input';
 import styles from './FavoritesSidebar.module.css';
 import sinPortada from '../../../assets/sin_portada.jpg';
 
+// Definimos las opciones de ordenamiento disponibles para el usuario
 type SortOption = 'date' | 'title' | 'genre';
 
 export const FavoritesSidebar = () => {
@@ -37,6 +39,7 @@ export const FavoritesSidebar = () => {
     });
   }, [favorites, sortBy]);
 
+  // Si no hay favoritos, mostramos un estado vacío con un mensaje amigable
   if (favorites.length === 0) {
     return (
       <div className={styles.emptyState}>
@@ -46,6 +49,7 @@ export const FavoritesSidebar = () => {
     );
   }
 
+  // Renderizamos la lista de favoritos ordenada según la selección del usuario
   return (
     <div className={styles.sidebarContainer}>
       <h2 className={styles.title}>Mis Favoritos ❤️ ({favorites.length})</h2>
@@ -64,6 +68,7 @@ export const FavoritesSidebar = () => {
         />
       </div>
 
+         {/* Lista de favoritos ordenada */}
       <div className={styles.list}>
         {sortedFavorites.map((movie) => (
           <div key={movie.imdbID} className={styles.favoriteItem}>
