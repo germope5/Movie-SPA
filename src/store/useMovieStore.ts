@@ -25,8 +25,10 @@ export const useMovieStore = create<MovieState>()(
       fetchMovies: async (title, type, year, genre) => {
         set({ isLoading: true, error: null });
         try {
-          const results = await searchMovies(title, type, year, genre);
-          set({ movies: results, isLoading: false });
+          // La API espera (title, type?, year?, page?, genre?) — pasamos page=1 por defecto
+          const results = await searchMovies(title, type, year, 1, genre);
+          // `searchMovies` devuelve { movies, totalResults }
+          set({ movies: results.movies, isLoading: false });
         } catch (err: any) {
           set({ error: err.message || 'Error al buscar películas', isLoading: false, movies: [] });
         }
