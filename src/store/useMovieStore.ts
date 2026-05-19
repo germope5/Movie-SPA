@@ -24,9 +24,15 @@ export const useMovieStore = create<MovieState>()(
         set({ isLoading: true, error: null });
         try {
           const results = await searchMovies(title, type, year);
-          set({ movies: results, isLoading: false });
+          // Si la API devuelve un arreglo vacío, considerarlo como "no encontrado"
+          if (!results || results.length === 0) {
+            set({ movies: [], error: 'No se encontraron películas', isLoading: false });
+          } else {
+            set({ movies: results, isLoading: false, error: null });
+          }
         } catch (err: any) {
-          set({ error: err.message || 'Error al buscar películas', isLoading: false });
+          // En caso de error, limpiamos resultados previos y mostramos el mensaje
+          set({ movies: [], error: err.message || 'Error al buscar películas', isLoading: false });
         }
       },
 
