@@ -1,11 +1,19 @@
-// Este archivo define el estado global de la aplicación usando Zustand,
-//  incluyendo la lógica para buscar películas y gestionar favoritos.
+// Justificación: el store centraliza decisiones de estado para simplificar la UI.
+// - Mantenemos `currentPage` y `totalResults` para controlar paginación de manera
+//   predecible entre componentes (p. ej. paginador y listado).
+// - Normalizamos `year` antes de llamar a la API para evitar llamadas con
+//   parámetros vacíos o malformados que producirían resultados inesperados.
+// - Persistimos únicamente `favorites` para evitar almacenar datos volátiles
+//   de búsqueda y reducir el tamaño del almacenamiento local.
+// - La firma de `fetchMovies` acepta `page` para permitir llamadas atómicas
+//   de paginación (siguiente/anterior) sin reejecutar toda la lógica de búsqueda.
+// Este diseño hace las responsabilidades claras y facilita pruebas y mantenimiento.
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { searchMovies } from '../services/api';
 import type { MovieDetail } from '../services/api';
 
-// Creamos un tipo para guardar la búsqueda activa
+// Definimos las interfaces para el estado y los parámetros de búsqueda
 interface SearchParams {
   title: string;
   type?: string;
