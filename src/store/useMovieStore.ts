@@ -1,3 +1,5 @@
+// Este archivo define el estado global de la aplicación usando Zustand,
+//  incluyendo la lógica para buscar películas y gestionar favoritos.
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { searchMovies } from '../services/api';
@@ -8,7 +10,7 @@ interface MovieState {
   favorites: MovieDetail[];
   isLoading: boolean;
   error: string | null;
-  fetchMovies: (title: string, type?: string, year?: string) => Promise<void>;
+  fetchMovies: (title: string, type?: string, year?: string, genre?: string) => Promise<void>;
   toggleFavorite: (movie: MovieDetail) => void;
 }
 
@@ -20,19 +22,13 @@ export const useMovieStore = create<MovieState>()(
       isLoading: false,
       error: null,
 
-      fetchMovies: async (title, type, year) => {
+      fetchMovies: async (title, type, year, genre) => {
         set({ isLoading: true, error: null });
         try {
-          const results = await searchMovies(title, type, year);
-          // Si la API devuelve un arreglo vacío, considerarlo como "no encontrado"
-          if (!results || results.length === 0) {
-            set({ movies: [], error: 'No se encontraron películas', isLoading: false });
-          } else {
-            set({ movies: results, isLoading: false, error: null });
-          }
+          const results = await searchMovies(title, type, year, genre);
+          set({ movies: results, isLoading: false });
         } catch (err: any) {
-          // En caso de error, limpiamos resultados previos y mostramos el mensaje
-          set({ movies: [], error: err.message || 'Error al buscar películas', isLoading: false });
+          set({ error: err.message || 'Error al buscar películas', isLoading: false, movies: [] });
         }
       },
 
