@@ -1,4 +1,10 @@
-// Este archivo define las funciones para interactuar con la API de OMDB,
+// Justificación: este módulo encapsula la integración con la API de OMDB.
+// - Devolvemos `SearchResponse` con `movies` y `totalResults` para soportar
+//   paginación en la interfaz sin acoplarla a la respuesta cruda de la API.
+// - Obtenemos detalles completos por cada `imdbID` porque la búsqueda
+//   básica no incluye campos como `Genre` ni `Plot`, y la UI necesita esos datos.
+// - El filtrado por `genre` se realiza del lado del cliente porque OMDB
+//   no proporciona un parámetro de búsqueda por género confiable.
 import axios from 'axios';
 
 // Claves y URLs de la API, así como la interfaz para los detalles de las películas
