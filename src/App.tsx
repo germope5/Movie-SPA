@@ -9,7 +9,7 @@ import { FavoritesSidebar } from './components/organisms/FavoritesSidebar/Favori
 import { Loading } from './components/atoms/Loading/Loading';
 import { EmptyState } from './components/atoms/EmptyState/EmptyState';
 import { ErrorAlert } from './components/atoms/ErrorAlert/ErrorAlert';
-
+import { Pagination } from './components/molecules/Pagination/Pagination';
 function App() {
   const { movies, isLoading, error } = useMovieStore();
   
@@ -40,6 +40,7 @@ function App() {
       )}
 
       {!isLoading && movies.length > 0 && (
+      <>  
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 'var(--spacing-lg)' }}>
           {movies.map((movie) => (
             <MovieCard 
@@ -49,6 +50,9 @@ function App() {
             />
           ))}
         </div>
+      <Pagination />
+        </>
+        
       )}
     </div>
   );
