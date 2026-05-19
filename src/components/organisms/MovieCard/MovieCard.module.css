@@ -17,7 +17,7 @@
 .imageContainer {
   position: relative;
   width: 100%;
-  aspect-ratio: 2 / 3; /* Mantiene la proporción clásica de los pósters de cine */
+  aspect-ratio: 2 / 3; 
   background-color: var(--color-bg-base);
   overflow: hidden;
 }
@@ -60,7 +60,7 @@
   padding: var(--spacing-md);
   display: flex;
   flex-direction: column;
-  flex: 1; /* Permite que el contenido empuje el botón al fondo si hay espacio */
+  flex: 1; 
 }
 
 .header {
@@ -76,7 +76,6 @@
   font-weight: 700;
   color: var(--color-text-primary);
   margin: 0;
-  /* Truncar título a 1 línea si es muy largo */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -103,7 +102,6 @@
   font-size: 0.9rem;
   color: var(--color-text-secondary);
   margin-bottom: var(--spacing-lg);
-  /* Magia de CSS para truncar texto a exactamente 3 líneas */
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -111,12 +109,11 @@
 }
 
 .footer {
-  margin-top: auto; /* Empuja el botón siempre a la parte inferior de la tarjeta */
+  margin-top: auto;
   display: flex;
   width: 100%;
 }
 
-/* Hacemos que el botón dentro del footer ocupe el 100% del ancho */
 .footer > button {
   width: 100%;
 }

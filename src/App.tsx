@@ -9,9 +9,11 @@ function App() {
   // 1. Componente del Encabezado (Slot para el Header)
   const headerContent = (
     <>
-      <h1 style={{ fontSize: '2rem', fontWeight: 'bold', letterSpacing: '-0.05em' }}>
-        Movie <span style={{ color: 'var(--color-brand-primary)' }}>SPA</span>
-      </h1>
+      <a href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+        <h1 style={{ fontSize: '2rem', fontWeight: 'bold', letterSpacing: '-0.05em' }}>
+          Movie <span style={{ color: 'var(--color-brand-primary)' }}>SPA</span>
+        </h1>
+      </a>
       <p style={{ color: 'var(--color-text-secondary)', marginTop: '0.25rem' }}>
         Buscador profesional de películas y series
       </p>

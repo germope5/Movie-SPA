@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { useMovieStore } from '../../../store/useMovieStore';
 import { Button } from '../../atoms/Button/Button';
+import sinPortada from '../../../assets/sin_portada.jpg';
 import type { MovieDetail } from '../../../services/api';
 import styles from './MovieCard.module.css';
 
@@ -14,15 +16,23 @@ export const MovieCard = ({ movie, onMoreInfo }: MovieCardProps) => {
   // Verificamos si la película actual ya está en la lista de favoritos
   const isFavorite = favorites.some((fav) => fav.imdbID === movie.imdbID);
 
-  // Manejo de póster no disponible de la OMDb API
-  const posterUrl = movie.Poster !== 'N/A' 
-    ? movie.Poster 
-    : 'https://via.placeholder.com/300x450/1e293b/94a3b8?text=Sin+Póster';
+  // Usar imagen local como fallback cuando OMDb no provee póster o falla la carga
+  const initialPoster = movie.Poster && movie.Poster !== 'N/A' ? movie.Poster : sinPortada;
+  const [imgSrc, setImgSrc] = useState<string>(initialPoster);
+
+
 
   return (
     <article className={styles.card}>
       <div className={styles.imageContainer}>
-        <img src={posterUrl} alt={`Póster de ${movie.Title}`} className={styles.poster} />
+        <img
+          src={imgSrc}
+          alt={`Póster de ${movie.Title}`}
+          className={styles.poster}
+          onError={() => {
+            if (imgSrc !== sinPortada) setImgSrc(sinPortada);
+          }}
+        />
         <button 
           className={styles.favoriteButton} 
           onClick={() => toggleFavorite(movie)}
