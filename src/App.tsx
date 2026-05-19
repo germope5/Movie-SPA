@@ -1,3 +1,4 @@
+// App.tsx - Componente raíz de la aplicación que integra todas las partes
 import { useState } from 'react'; 
 import { useMovieStore } from './store/useMovieStore';
 import { MainLayout } from './components/templates/MainLayout/MainLayout';
@@ -16,6 +17,7 @@ function App() {
   // Estado para controlar qué película mostrar en el modal
   const [selectedMovie, setSelectedMovie] = useState<MovieDetail | null>(null);
 
+  // Contenido del header con el título de la aplicación y un subtítulo
   const headerContent = (
     <>
       <a href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
@@ -29,6 +31,7 @@ function App() {
     </>
   );
 
+  // Contenido principal que muestra el estado de carga, errores, resultados o un mensaje vacío
   const resultsContent = (
     <div>
       {isLoading && <Loading message="Buscando títulos en la base de datos..." />}
@@ -50,6 +53,7 @@ function App() {
             />
           ))}
         </div>
+      {/* Paginación */}
       <Pagination />
         </>
         
@@ -57,12 +61,16 @@ function App() {
     </div>
   );
 
+  // Contenido de la barra lateral de favoritos, 
+  // que muestra las películas marcadas como favoritas
   const favoritesContent = (
     <FavoritesSidebar />
   );
 
+  // Renderizamos el MainLayout con las secciones correspondientes y el modal de detalles
   return (
     <>
+      {/* Componente de plantilla principal */}
       <MainLayout
         header={headerContent}
         searchForm={<SearchForm />}

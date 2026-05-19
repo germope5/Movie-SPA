@@ -1,3 +1,5 @@
+// Componente de paginación para navegar entre páginas de resultados
+
 import { useMovieStore } from '../../../store/useMovieStore';
 import { Button } from '../../atoms/Button/Button';
 
