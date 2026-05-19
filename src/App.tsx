@@ -1,6 +1,7 @@
 import { useMovieStore } from './store/useMovieStore';
 import { MainLayout } from './components/templates/MainLayout/MainLayout';
 import { SearchForm } from './components/organisms/SearchForm/SearchForm';
+import { MovieCard } from './components/organisms/MovieCard/MovieCard';
 
 function App() {
   const { movies, isLoading, error } = useMovieStore();
@@ -46,22 +47,18 @@ function App() {
       {!isLoading && movies.length > 0 && (
         <div style={{ 
           display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', 
-          gap: 'var(--spacing-md)' 
+          gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', 
+          gap: 'var(--spacing-lg)' 
         }}>
           {movies.map((movie) => (
-            <div 
+            <MovieCard 
               key={movie.imdbID} 
-              style={{ 
-                backgroundColor: 'var(--color-bg-surface)', 
-                padding: 'var(--spacing-sm)', 
-                borderRadius: 'var(--radius-md)' 
-              }}
-            >
-              {/* Vista previa temporal de los datos estructurados que llegan de la API */}
-              <p style={{ fontWeight: 'bold' }}>{movie.Title}</p>
-              <p style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>{movie.Year} • {movie.Genre}</p>
-            </div>
+              movie={movie} 
+              onMoreInfo={(selectedMovie) => {
+                console.log("Abrir modal para:", selectedMovie.Title);
+                // Aquí conectaremos el modal en el siguiente paso
+              }} 
+            />
           ))}
         </div>
       )}
