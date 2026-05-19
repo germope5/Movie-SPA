@@ -16,23 +16,35 @@ export interface MovieDetail {
   Type: string;
 }
 
+export interface SearchResponse {
+  movies: MovieDetail[];
+  totalResults: number;
+}
+
 // Parámetros para la búsqueda de películas (incluido el género)
-export const searchMovies = async (title: string, type?: string, year?: string, genre?: string): Promise<MovieDetail[]> => {
+export const searchMovies = async (
+title: string, 
+  type?: string, 
+  year?: string, 
+  page: number = 1,
+  genre?: string): Promise<SearchResponse> => {
   try {
     const searchParams = new URLSearchParams({
       apikey: API_KEY,
       s: title,
+      page: page.toString(), // Enviamos la página a la API
       ...(type && { type }),
       ...(year && { y: year }),
     });
 
-    const searchResponse = await axios.get(`${BASE_URL}?${searchParams.toString()}`);
+const searchResponse = await axios.get(`${BASE_URL}?${searchParams.toString()}`);
     
     if (searchResponse.data.Response === 'False') {
       throw new Error(searchResponse.data.Error);
     }
 
     const basicResults = searchResponse.data.Search;
+    const totalResults = parseInt(searchResponse.data.totalResults, 10); // Capturamos el total
 
     const detailedMoviesPromises = basicResults.map(async (movie: { imdbID: string }) => {
       const detailResponse = await axios.get(`${BASE_URL}?apikey=${API_KEY}&i=${movie.imdbID}&plot=full`);
@@ -41,22 +53,19 @@ export const searchMovies = async (title: string, type?: string, year?: string, 
 
     const detailedMovies = await Promise.all(detailedMoviesPromises);
 
-    // Filtramos por género en el cliente
     if (genre) {
-      // Convertimos todo a minúsculas para que la búsqueda sea insensible a mayúsculas
       const filteredMovies = detailedMovies.filter((movie) => 
         movie.Genre !== 'N/A' && movie.Genre.toLowerCase().includes(genre.toLowerCase())
       );
       
-      // Si el filtro dejó la lista vacía, lanzamos un error claro para el usuario
       if (filteredMovies.length === 0) {
-        throw new Error(`No se encontraron títulos de "${genre}" para esta búsqueda.`);
+        throw new Error(`No se encontraron títulos de "${genre}" en esta página.`);
       }
       
-      return filteredMovies;
+      return { movies: filteredMovies, totalResults };
     }
 
-    return detailedMovies;
+    return { movies: detailedMovies, totalResults };
   } catch (error) {
     console.error("Error fetching movies:", error);
     throw error;
