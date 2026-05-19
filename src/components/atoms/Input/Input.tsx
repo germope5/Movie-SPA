@@ -1,3 +1,5 @@
+// Componente de input reutilizable que puede renderizar
+//  tanto un campo de texto como un select,
 import styles from './Input.module.css';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement | HTMLSelectElement> {

@@ -18,12 +18,14 @@
   --radius-lg: 0.75rem;
 }
 
+/* Estilos globales */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+/* Estilos globales */
 body {
   background-color: var(--color-bg-base);
   color: var(--color-text-primary);

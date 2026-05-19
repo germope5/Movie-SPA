@@ -1,3 +1,5 @@
+// Componente de indicador de carga para mostrar un mensaje 
+// y un spinner mientras se cargan los datos.
 import styles from './Loading.module.css';
 
 interface LoadingProps {

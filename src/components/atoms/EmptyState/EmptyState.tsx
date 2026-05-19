@@ -1,3 +1,5 @@
+//Componente de estado vacío para mostrar mensajes cuando no hay resultados 
+// o contenido disponible.
 import styles from './EmptyState.module.css';
 
 interface EmptyProps {

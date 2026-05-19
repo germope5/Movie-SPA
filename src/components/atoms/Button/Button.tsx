@@ -1,3 +1,4 @@
+//Componente de botón reutilizable con variantes de estilo y soporte para accesibilidad
 import styles from './Button.module.css';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
