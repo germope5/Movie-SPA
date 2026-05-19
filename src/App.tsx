@@ -5,6 +5,7 @@ import { SearchForm } from './components/organisms/SearchForm/SearchForm';
 import { MovieCard } from './components/organisms/MovieCard/MovieCard';
 import { MovieDetailModal } from './components/organisms/MovieDetailModal/MovieDetailModal'; 
 import type { MovieDetail } from './services/api';
+import { FavoritesSidebar } from './components/organisms/FavoritesSidebar/FavoritesSidebar';
 
 function App() {
   const { movies, isLoading, error } = useMovieStore();
@@ -60,14 +61,7 @@ function App() {
   );
 
   const favoritesContent = (
-    <div>
-      <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: 'var(--spacing-md)' }}>
-        Mis Favoritos ❤️
-      </h2>
-      <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>
-        Próximamente: Lista persistente y ordenamiento.
-      </p>
-    </div>
+    <FavoritesSidebar />
   );
 
   return (
@@ -79,7 +73,7 @@ function App() {
         favoritesSidebar={favoritesContent}
       />
 
-      {/* 5. Renderizado condicional del modal accesible */}
+      {/* Renderizado condicional del modal accesible */}
       <MovieDetailModal 
         movie={selectedMovie} 
         onClose={() => setSelectedMovie(null)} 
