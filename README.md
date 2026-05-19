@@ -36,10 +36,10 @@ npm create vite@latest movie-spa -- --template react-ts
 ```
 
 1. **Clonar el repositorio:**
-   ```bash
-   git clone <URL_DE_TU_REPOSITORIO>
-   cd movie-spa
-   ```
+```bash
+git clone <URL_DE_TU_REPOSITORIO>
+cd movie-spa
+```
 Instalar las dependencias:
 
  ```bash
@@ -82,8 +82,8 @@ node jsonActivity2.js
 ```
 
 ## 🌐 Despliegue en Vivo
-El entorno de producción ha sido desplegado y puede evaluarse en el siguiente enlace:
-[Insertar aquí tu link público de Vercel/Netlify]
+El entorno de producción ha sido desplegado y puede evaluarse en el siguiente enlace en Vercel:
+https://movie-spa-one.vercel.app/
 
 ### Autor: Germán Mora Pérez
 

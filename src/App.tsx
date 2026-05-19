@@ -6,6 +6,9 @@ import { MovieCard } from './components/organisms/MovieCard/MovieCard';
 import { MovieDetailModal } from './components/organisms/MovieDetailModal/MovieDetailModal'; 
 import type { MovieDetail } from './services/api';
 import { FavoritesSidebar } from './components/organisms/FavoritesSidebar/FavoritesSidebar';
+import { Loading } from './components/atoms/Loading/Loading';
+import { EmptyState } from './components/atoms/EmptyState/EmptyState';
+import { ErrorAlert } from './components/atoms/ErrorAlert/ErrorAlert';
 
 function App() {
   const { movies, isLoading, error } = useMovieStore();
@@ -28,26 +31,16 @@ function App() {
 
   const resultsContent = (
     <div>
-      {isLoading && (
-        <p style={{ color: 'var(--color-brand-primary)', textAlign: 'center', padding: '2rem' }}>
-          Buscando títulos en la base de datos...
-        </p>
-      )}
-      
-      {error && (
-        <div style={{ backgroundColor: 'var(--color-danger-bg)', color: 'white', padding: 'var(--spacing-md)', borderRadius: 'var(--radius-md)' }}>
-          <strong>Error:</strong> {error}
-        </div>
-      )}
+      {isLoading && <Loading message="Buscando títulos en la base de datos..." />}
+
+      {error && <ErrorAlert title="Error" message={error} />}
 
       {!isLoading && !error && movies.length === 0 && (
-        <p style={{ color: 'var(--color-text-secondary)', textAlign: 'center', padding: '2rem' }}>
-          No hay búsquedas activas. Ingresa un título arriba para comenzar.
-        </p>
+        <EmptyState title="No hay búsquedas" description="Ingresa un título arriba para comenzar." />
       )}
 
       {!isLoading && movies.length > 0 && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 'var(--spacing-lg)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 'var(--spacing-lg)' }}>
           {movies.map((movie) => (
             <MovieCard 
               key={movie.imdbID} 

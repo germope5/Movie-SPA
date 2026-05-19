@@ -1,0 +1,23 @@
+.container{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:0.5rem;
+  padding:2rem 1rem;
+  color:var(--color-text-secondary);
+}
+.icon{
+  font-size:2.5rem;
+}
+.title{
+  font-size:1.1rem;
+  color:var(--color-text-primary);
+}
+.desc{
+  font-size:0.95rem;
+  text-align:center;
+  max-width:28rem;
+}
+@media (max-width:600px){
+  .desc{max-width:100%;}
+}
